@@ -8,7 +8,8 @@ try {
 
   const propertyOptions = {
     date: {
-      locales: "ko-KR",
+      timeZone: "Asia/Seoul",
+      format: "yyyy-MM-dd HH:mm:ss",
     },
   };
   const sortOptions = [
