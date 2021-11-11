@@ -5,14 +5,14 @@
   "keywords": [],
   "license": "ISC",
   "author": "Younho Choo",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js --license LICENSE"
   },
   "dependencies": {
     "@actions/core": "1.6.0",
-    "@narkdown/client": "0.2.0",
-    "@narkdown/notion-parser": "0.3.0"
+    "@narkdown/client": "0.2.1",
+    "@narkdown/notion-parser": "0.3.1"
   },
   "devDependencies": {
     "@vercel/ncc": "0.31.1"
