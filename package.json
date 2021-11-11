@@ -1,0 +1,20 @@
+{
+  "name": "notion-db2github",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "Younho Choo",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js --license LICENSE"
+  },
+  "dependencies": {
+    "@actions/core": "1.6.0",
+    "@narkdown/client": "0.2.0",
+    "@narkdown/notion-parser": "0.3.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "0.31.1"
+  }
+}

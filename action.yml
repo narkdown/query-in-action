@@ -1,0 +1,19 @@
+name: notion-db-2-github
+
+description: Get parsed rows of Notion database
+
+inputs:
+  database-id:
+    description: Notion Database ID
+    required: true
+  notion-api-key:
+    description: Notion API Key
+    required: true
+
+outputs:
+  rows:
+    description: parsed rows of Notion database
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
