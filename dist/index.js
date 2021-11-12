@@ -11430,7 +11430,7 @@ try {
   const sortOptions = [
     {
       timestamp: core.getInput("sort-option-timestamp"),
-      direction: core.getInput("sort-option-timestamp"),
+      direction: core.getInput("sort-option-direction"),
     },
   ];
 
