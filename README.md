@@ -2,7 +2,7 @@
 
 [![GitHub Action: View on Marketplace](https://img.shields.io/badge/GitHub%20Action-View_on_Marketplace-blue?logo=github)](https://github.com/marketplace/actions/narkdown-query-in-action)
 [![narkdown](https://github.com/younho9/awesome-reading-list/actions/workflows/narkdown.yml/badge.svg?branch=main&event=schedule)](https://github.com/younho9/awesome-reading-list/actions/workflows/narkdown.yml)
-[![Version: v0.3.1](https://img.shields.io/badge/Version-v0.3.1-green)](https://github.com/younho9/notion2github/releases/tag/v0.3.1)
+[![Version: v0.3.2](https://img.shields.io/badge/Version-v0.3.2-green)](https://github.com/younho9/notion2github/releases/tag/v0.3.2)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 This action returns the result of querying and parsing the Notion database.
@@ -84,7 +84,7 @@ jobs:
       - uses: actions/setup-node@v2
 
       - id: narkdown-query
-        uses: narkdown/query-in-action@v0.3.1
+        uses: narkdown/query-in-action@v0.3.2
         with:
           database-id: ${{ secrets.DATABASE_ID }}
           notion-api-key: ${{ secrets.NOTION_KEY }}
