@@ -3,16 +3,32 @@ name: notion-db2github
 description: Get parsed rows of Notion database
 
 inputs:
-  database-id:
-    description: Notion Database ID
-    required: true
   notion-api-key:
-    description: Notion API Key
+    description: Notion API Key.
     required: true
+  database-id:
+    description: Notion Database ID.
+    required: true
+  date-option-timezone:
+    description: Timezone ID used to parse date properties.
+    required: false
+    default: Asia/Seoul
+  date-option-format:
+    description: Date formatting rules used to parse data properties.
+    required: false
+    default: yyyy-MM-dd HH:mm:ss
+  sort-option-timestamp:
+    description: Database query sorting criteria. (created_time | last_edited_time)
+    required: false
+    default: created_time
+  sort-option-direction:
+    description: Database query sorting direction. (ascending | descending)
+    required: false
+    default: descending
 
 outputs:
   rows:
-    description: parsed rows of Notion database
+    description: Parsed result of Notion database rows.
 
 runs:
   using: 'node12'

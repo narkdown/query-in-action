@@ -8,14 +8,14 @@ try {
 
   const propertyOptions = {
     date: {
-      timeZone: "Asia/Seoul",
-      format: "yyyy-MM-dd HH:mm:ss",
+      timeZone: core.getInput("date-option-timezone"),
+      format: core.getInput("date-option-format"),
     },
   };
   const sortOptions = [
     {
-      timestamp: "created_time",
-      direction: "descending",
+      timestamp: core.getInput("sort-option-timestamp"),
+      direction: core.getInput("sort-option-timestamp"),
     },
   ];
 
