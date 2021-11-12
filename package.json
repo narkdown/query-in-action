@@ -1,10 +1,20 @@
 {
-  "name": "notion-db2github",
-  "version": "0.2.0",
-  "description": "",
-  "keywords": [],
-  "license": "ISC",
-  "author": "Younho Choo",
+  "name": "@narkdown/query-in-action",
+  "version": "0.3.0",
+  "description": "Query Notion database in the GitHub Action",
+  "keywords": [
+    "notion",
+    "notionapi",
+    "actions",
+    "github-actions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narkdown/query-in-action.git"
+  },
+  "license": "MIT",
+  "author": "Younho Choo <yo+github@younho9.com>",
+  "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js --license LICENSE"
@@ -16,5 +26,8 @@
   },
   "devDependencies": {
     "@vercel/ncc": "0.31.1"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
