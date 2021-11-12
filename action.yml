@@ -2,6 +2,10 @@ name: '@narkdown/query-in-action'
 
 description: Get parsed rows of Notion database
 
+branding:
+  icon: arrow-down
+  color: white
+
 inputs:
   notion-api-key:
     description: Notion API Key.
