@@ -1,6 +1,6 @@
 {
   "name": "@narkdown/query-in-action",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Query Notion database in the GitHub Action",
   "keywords": [
     "notion",
