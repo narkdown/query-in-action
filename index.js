@@ -1,6 +1,6 @@
 const core = require("@actions/core");
-const NarkdownClient = require("@narkdown/client").default;
-const NotionParser = require("@narkdown/notion-parser").default;
+const {NarkdownClient} = require("@narkdown/client");
+const {NotionParser} = require("@narkdown/notion-parser");
 
 try {
   const notionAPIKey = core.getInput("notion-api-key");

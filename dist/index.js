@@ -1287,17 +1287,14 @@ exports.checkBypass = checkBypass;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
-var __webpack_unused_export__;
 
 
-__webpack_unused_export__ = ({
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports.Z = void 0;
+}));
+exports.NarkdownClient = void 0;
 
 var _client = __nccwpck_require__(324);
-
-var _apiEndpoints = __nccwpck_require__(1605);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -1334,7 +1331,7 @@ class NarkdownClient extends _client.Client {
 
 }
 
-exports.Z = NarkdownClient;
+exports.NarkdownClient = NarkdownClient;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -1536,13 +1533,12 @@ exports.getRows = getRows;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
-var __webpack_unused_export__;
 
 
-__webpack_unused_export__ = ({
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports.Z = void 0;
+}));
+exports.NotionParser = void 0;
 
 var Database = _interopRequireWildcard(__nccwpck_require__(8916));
 
@@ -1562,7 +1558,7 @@ class NotionParser {
 
 }
 
-exports.Z = NotionParser;
+exports.NotionParser = NotionParser;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -11414,8 +11410,8 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(2186);
-const NarkdownClient = __nccwpck_require__(8230)/* .default */ .Z;
-const NotionParser = __nccwpck_require__(1046)/* .default */ .Z;
+const {NarkdownClient} = __nccwpck_require__(8230);
+const {NotionParser} = __nccwpck_require__(1046);
 
 try {
   const notionAPIKey = core.getInput("notion-api-key");
