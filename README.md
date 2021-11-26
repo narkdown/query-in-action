@@ -2,7 +2,7 @@
 
 [![GitHub Action: View on Marketplace](https://img.shields.io/badge/GitHub%20Action-View_on_Marketplace-blue?logo=github)](https://github.com/marketplace/actions/narkdown-query-in-action)
 [![narkdown](https://github.com/younho9/awesome-reading-list/actions/workflows/narkdown.yml/badge.svg?branch=main&event=schedule)](https://github.com/younho9/awesome-reading-list/actions/workflows/narkdown.yml)
-[![Version: v0.3.3](https://img.shields.io/badge/Version-v0.3.3-green)](https://github.com/narkdown/query-in-action/releases/tag/v0.3.3)
+[![GitHub version](https://badge.fury.io/gh/narkdown%2Fquery-in-action.svg)](https://badge.fury.io/gh/narkdown%2Fquery-in-action)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 This action returns the result of querying and parsing the Notion database.
