@@ -1303,28 +1303,122 @@ class NarkdownClient extends _client.Client {
     super(...args);
 
     _defineProperty(this, "unlimited", {
+      blocks: {
+        children: {
+          /**
+           * Retrieve block children without pagination
+           */
+          list: async ({
+            start_cursor,
+            ...rest
+          }) => {
+            var _response$next_cursor;
+
+            const response = await this.blocks.children.list({
+              start_cursor,
+              ...rest
+            });
+            if (!response.has_more) return response;
+            const nextResponse = await this.unlimited.blocks.children.list({ ...rest,
+              start_cursor: (_response$next_cursor = response.next_cursor) !== null && _response$next_cursor !== void 0 ? _response$next_cursor : undefined
+            });
+            return { ...nextResponse,
+              results: [...response.results, ...nextResponse.results]
+            };
+          }
+        }
+      },
       databases: {
         /**
          * Query a database without pagination
          */
-        queryAll: async ({
+        query: async ({
           start_cursor,
           ...rest
         }) => {
-          var _response$next_cursor;
+          var _response$next_cursor2;
 
           const response = await this.databases.query({
             start_cursor,
             ...rest
           });
           if (!response.has_more) return response;
-          const nextResponse = await this.databases.query({ ...rest,
-            start_cursor: (_response$next_cursor = response.next_cursor) !== null && _response$next_cursor !== void 0 ? _response$next_cursor : undefined
+          const nextResponse = await this.unlimited.databases.query({ ...rest,
+            start_cursor: (_response$next_cursor2 = response.next_cursor) !== null && _response$next_cursor2 !== void 0 ? _response$next_cursor2 : undefined
+          });
+          return { ...nextResponse,
+            results: [...response.results, ...nextResponse.results]
+          };
+        },
+
+        /**
+         * List databases without pagination
+         *
+         * @deprecated Please use `search`
+         */
+        list: async ({
+          start_cursor,
+          ...rest
+        }) => {
+          var _response$next_cursor3;
+
+          const response = await this.databases.list({
+            start_cursor,
+            ...rest
+          });
+          if (!response.has_more) return response;
+          const nextResponse = await this.unlimited.databases.list({ ...rest,
+            start_cursor: (_response$next_cursor3 = response.next_cursor) !== null && _response$next_cursor3 !== void 0 ? _response$next_cursor3 : undefined
           });
           return { ...nextResponse,
             results: [...response.results, ...nextResponse.results]
           };
         }
+      },
+      users: {
+        /**
+         * List all users without pagination
+         */
+        list: async ({
+          start_cursor,
+          ...rest
+        }) => {
+          var _response$next_cursor4;
+
+          const response = await this.users.list({
+            start_cursor,
+            ...rest
+          });
+          if (!response.has_more) return response;
+          const nextResponse = await this.unlimited.users.list({ ...rest,
+            start_cursor: (_response$next_cursor4 = response.next_cursor) !== null && _response$next_cursor4 !== void 0 ? _response$next_cursor4 : undefined
+          });
+          return { ...nextResponse,
+            results: [...response.results, ...nextResponse.results]
+          };
+        }
+      },
+
+      /**
+       * Search without pagination
+       */
+      search: async ({
+        start_cursor,
+        ...rest
+      }) => {
+        var _response$next_cursor5;
+
+        const response = await this.search({
+          start_cursor,
+          ...rest
+        });
+        if (!response.has_more) return response;
+        const nextResponse = await this.unlimited.search({ ...rest,
+          start_cursor: (_response$next_cursor5 = response.next_cursor) !== null && _response$next_cursor5 !== void 0 ? _response$next_cursor5 : undefined
+        });
+        return { ...nextResponse,
+          results: [...response.results, ...nextResponse.results]
+        };
       }
     });
   }
@@ -1345,7 +1439,7 @@ exports.NarkdownClient = NarkdownClient;
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.url = exports.title = exports.select = exports.rich_text = exports.properties = exports.phone_number = exports.number = exports.multi_select = exports.last_edited_time = exports.getRows = exports.email = exports.date = exports.created_time = exports.checkbox = exports.SUPPORTED_PROPERTIES = void 0;
+exports.url = exports.title = exports.select = exports.rich_text = exports.properties = exports.phone_number = exports.number = exports.multi_select = exports.last_edited_time = exports.getRows = exports.email = exports.date = exports.created_time = exports.checkbox = exports.applyLink = exports.applyAnnotations = exports.annotationParsers = exports.SUPPORTED_PROPERTIES = void 0;
 
 var _utils = __nccwpck_require__(1191);
 
@@ -1358,16 +1452,46 @@ const SUPPORTED_PROPERTIES = ['title', 'rich_text', 'number', 'select', 'multi_s
 'created_time', // 'last_edited_by',
 'last_edited_time'];
 exports.SUPPORTED_PROPERTIES = SUPPORTED_PROPERTIES;
+const annotationParsers = {
+  bold: string_ => `**${string_}**`,
+  italic: string_ => `_${string_}_`,
+  strikethrough: string_ => `~~${string_}~~`,
+  underline: string_ => `<u>${string_}</u>`,
+  code: string_ => `\`${string_}\``,
+  color: string_ => `${string_}`
+};
+exports.annotationParsers = annotationParsers;
+
+const applyAnnotations = (text, annotations) => {
+  let annotatedText = text;
+  const annotationKeys = (0, _utils.objectEntries)(annotations).filter(([, value]) => value).map(([key]) => key);
+
+  for (const key of annotationKeys) {
+    annotatedText = annotationParsers[key](annotatedText);
+  }
+
+  return annotatedText;
+};
+
+exports.applyAnnotations = applyAnnotations;
+
+const applyLink = (text, href) => `[${text}](${href})`;
+
+exports.applyLink = applyLink;
 
 const title = value => value.title.map(({
-  plain_text
-}) => plain_text).join('');
+  plain_text,
+  annotations,
+  href
+}) => href ? applyLink(applyAnnotations(plain_text, annotations), href) : applyAnnotations(plain_text, annotations)).join('');
 
 exports.title = title;
 
 const rich_text = value => value.rich_text.map(({
-  plain_text
-}) => plain_text).join('');
+  plain_text,
+  annotations,
+  href
+}) => href ? applyLink(applyAnnotations(plain_text, annotations), href) : applyAnnotations(plain_text, annotations)).join('');
 
 exports.rich_text = rich_text;
 
@@ -1390,9 +1514,9 @@ exports.select = select;
 const multi_select = ({
   multi_select
 }) => {
-  var _multi_select$at$name, _multi_select$at;
+  var _multi_select$0$name, _multi_select$;
 
-  return (_multi_select$at$name = (_multi_select$at = multi_select.at(0)) === null || _multi_select$at === void 0 ? void 0 : _multi_select$at.name) !== null && _multi_select$at$name !== void 0 ? _multi_select$at$name : '';
+  return (_multi_select$0$name = (_multi_select$ = multi_select[0]) === null || _multi_select$ === void 0 ? void 0 : _multi_select$.name) !== null && _multi_select$0$name !== void 0 ? _multi_select$0$name : '';
 };
 
 exports.multi_select = multi_select;
@@ -1657,6 +1781,32 @@ Object.keys(_markdownEscapes).forEach(function (key) {
     }
   });
 });
+
+var _objectKeys = __nccwpck_require__(3243);
+
+Object.keys(_objectKeys).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _objectKeys[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _objectKeys[key];
+    }
+  });
+});
+
+var _objectEntries = __nccwpck_require__(3990);
+
+Object.keys(_objectEntries).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _objectEntries[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _objectEntries[key];
+    }
+  });
+});
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -1687,6 +1837,42 @@ const escape = string_ => {
 
 exports.escape = escape;
 //# sourceMappingURL=markdown-escapes.js.map
+
+/***/ }),
+
+/***/ 3990:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.objectEntries = objectEntries;
+
+function objectEntries(value) {
+  return Object.entries(value);
+}
+//# sourceMappingURL=object-entries.js.map
+
+/***/ }),
+
+/***/ 3243:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.objectKeys = objectKeys;
+
+function objectKeys(value) {
+  return Object.keys(value);
+}
+//# sourceMappingURL=object-keys.js.map
 
 /***/ }),
 
@@ -11433,7 +11619,7 @@ try {
   (async () => {
     const narkdown = new NarkdownClient({ auth: notionAPIKey });
     const notionParser = new NotionParser({ propertyOptions });
-    const { results } = await narkdown.unlimited.databases.queryAll({
+    const { results } = await narkdown.unlimited.databases.query({
       database_id: databaseId,
       sorts: sortOptions,
     });

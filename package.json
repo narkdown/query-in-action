@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@actions/core": "1.6.0",
-    "@narkdown/client": "0.3.1",
-    "@narkdown/notion-parser": "0.5.0"
+    "@narkdown/client": "0.4.0",
+    "@narkdown/notion-parser": "0.6.0"
   },
   "devDependencies": {
     "@vercel/ncc": "0.31.1"

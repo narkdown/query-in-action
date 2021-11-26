@@ -22,7 +22,7 @@ try {
   (async () => {
     const narkdown = new NarkdownClient({ auth: notionAPIKey });
     const notionParser = new NotionParser({ propertyOptions });
-    const { results } = await narkdown.unlimited.databases.queryAll({
+    const { results } = await narkdown.unlimited.databases.query({
       database_id: databaseId,
       sorts: sortOptions,
     });
